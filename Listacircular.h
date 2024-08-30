@@ -1,13 +1,13 @@
 typedef struct {
-    struct Node* head;
-    struct Node* tail;
-} circularList;
-
-typedef struct {
     int id;
     int valor;
     struct Node* nextNode;
 } Node;
+
+typedef struct {
+    struct Node* head;
+    struct Node* tail;
+} circularList;
 
 Node* inserirInicio(circularList* lista_circular, int id, int valor);
 Node* criarNode(int id, int valor);

@@ -21,18 +21,19 @@ Node* criarNode(int novo_node_id, int novo_node_valor){
 Node* inserirInicio(circularList* lista_circular, int id, int valor) {
     Node* novoNode = criarNode(id, valor);
 
-    if (lista_circular->head == NULL)
-    {
+    if (lista_circular->head == NULL) {
+        // Lista vazia
         lista_circular->head = novoNode;
-        return novoNode;
+        lista_circular->tail = novoNode;
+        novoNode->nextNode = novoNode;
+    } else {
+        novoNode->nextNode = lista_circular->head;
+        lista_circular->head = novoNode;
+        lista_circular->tail->nextNode = novoNode;
     }
 
-    if (lista_circular->head.nextNode == NULL)
-    {
-        lista_circular->tail = novoNode;
-        lista_circular->head->nextNode = lista_circular->tail;
-        return novoNode;
-    }
+    return novoNode;
+    
     
 
     
