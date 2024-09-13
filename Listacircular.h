@@ -2,6 +2,7 @@ typedef struct Node {
     int id;
     int valor;
     struct Node* nextNode;
+    struct Node* prevNode;
 } Node;
 
 typedef struct {

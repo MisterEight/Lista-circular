@@ -8,9 +8,10 @@ circularList lista_circular;
 int main() {
     iniciarLista(&lista_circular);
 
-    //inserirInicio(&lista_circular, 1, 10);
-    //inserirInicio(&lista_circular, 2, 5);
-    //inserirInicio(&lista_circular, 3, 6);
+    /*adicionaNode(&lista_circular, 1, 10);
+    adicionaNode(&lista_circular, 2, 5);
+    adicionaNode(&lista_circular, 3, 6);*/
+
     inserirOrdenado(&lista_circular, 12, 10);
     inserirOrdenado(&lista_circular, 15, 5);
     inserirOrdenado(&lista_circular, 17, 6);

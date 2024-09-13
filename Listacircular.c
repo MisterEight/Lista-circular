@@ -14,6 +14,7 @@ Node* criarNode(int novo_node_id, int novo_node_valor){
     novoNode->id = novo_node_id;
     novoNode->valor = novo_node_valor;
     novoNode->nextNode = NULL;
+    novoNode->prevNode = NULL;
 
     return novoNode;
 }
@@ -22,14 +23,16 @@ Node* adicionaNode(circularList* lista_circular, int id, int valor) {
     Node* novoNode = criarNode(id, valor);
 
     if (lista_circular->head == NULL) {
-        // Lista vazia
         lista_circular->head = novoNode;
         lista_circular->tail = novoNode;
         novoNode->nextNode = novoNode;
+        novoNode->prevNode = novoNode;
     } else {
-        lista_circular->tail->nextNode = novoNode; 
-        lista_circular->tail = novoNode;            
+        lista_circular->tail->nextNode = novoNode;
+        novoNode->prevNode = lista_circular->tail;
+        lista_circular->tail = novoNode;        
         novoNode->nextNode = lista_circular->head;
+        lista_circular->head->prevNode = lista_circular->tail;
     }
 
     return novoNode;
@@ -58,8 +61,12 @@ Node* inserirOrdenado(circularList* lista_circular, int id, int valor){
     if (lista_circular->head == NULL)
     {
         lista_circular->head = novoNode;
+
         lista_circular->tail = novoNode;
+
         novoNode->nextNode = novoNode;
+
+        novoNode->prevNode = novoNode;
         
         return novoNode;
     }
@@ -68,13 +75,25 @@ Node* inserirOrdenado(circularList* lista_circular, int id, int valor){
     {
         if (lista_circular->head->id >= novoNode->id)
         {
-            lista_circular->tail->nextNode = novoNode; 
-            lista_circular->head = novoNode;            
-            novoNode->nextNode = lista_circular->tail;
+            lista_circular->tail->nextNode = novoNode;
+
+            lista_circular->tail->prevNode = novoNode;
+
+            lista_circular->head = novoNode; 
+
+            lista_circular->head->prevNode = lista_circular->tail;
+
+            lista_circular->head->nextNode = lista_circular->tail;
         } else {
             novoNode->nextNode = lista_circular->head;
+
+            novoNode->prevNode = lista_circular->head;
+
             lista_circular->tail = novoNode;
+
             lista_circular->head->nextNode = lista_circular->tail;
+
+            lista_circular->head->prevNode = lista_circular->tail;
         }
         
         return novoNode;
@@ -83,32 +102,40 @@ Node* inserirOrdenado(circularList* lista_circular, int id, int valor){
     if (lista_circular->head->id >= novoNode->id)
     {
         novoNode->nextNode = lista_circular->head;
+
+        lista_circular->head->prevNode = novoNode;
+
+        novoNode->prevNode = lista_circular->tail;
+
         lista_circular->head = novoNode;
+
         lista_circular->tail->nextNode = lista_circular->head;
+
         return novoNode;
     }
 
     if (novoNode->id >= lista_circular->tail->id)
     {
         novoNode->nextNode = lista_circular->head;
+        novoNode->prevNode = lista_circular->tail;
         lista_circular->tail->nextNode = novoNode;
         lista_circular->tail = novoNode;
         return novoNode;
     }
     
     Node* no_atual = lista_circular->head;
-    Node* no_anterior = lista_circular->tail;
     
     do
     {
         if (no_atual->id > novoNode->id)
         {
             novoNode->nextNode = no_atual;
-            no_anterior->nextNode = novoNode;
+            no_atual->prevNode->nextNode = novoNode;
+            novoNode->prevNode = no_atual->prevNode;
+            no_atual->prevNode = novoNode;
             break;
         }
 
-        no_anterior = no_atual;
         no_atual = no_atual->nextNode;
         
         
